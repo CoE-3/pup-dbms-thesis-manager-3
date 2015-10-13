@@ -1,0 +1,33 @@
+# app.yaml = application config file
+application: pup-dbms-thesis-manager-3a
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /static
+  static_dir: static
+- url: /css
+  static_dir: css
+- url: /font-awesome
+  static_dir: font-awesome
+- url: /fonts
+  static_dir: fonts
+- url: /img
+  static_dir: img
+- url: /js
+  static_dir: js
+- url: /less
+  static_dir: less
+- url: /mail
+  static_dir: mail
+
+- url: /.*
+  script: main.app
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
