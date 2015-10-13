@@ -209,6 +209,33 @@ section.success a.active {
     z-index: 2;
 }
 
+.bn-outline:hover,
+.bn-outline:focus,
+.bn-outline:active,
+.bn-outline.active {
+    border: solid 2px #fff;
+    color: #18bc9c;
+    background: #000A14;
+}
+
+.bn-outline{
+    margin-top: 5px;
+    margin-left: 20px;
+    border: solid 2px #fff;
+    font-size: 20px;
+    color: #fff;
+    background: #2c3e50;
+    transition: all .3s ease-in-out;
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    width: 80px;
+    padding: 5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .btn-outline {
     margin-top: 5px;
     margin-left: 20px;
@@ -489,7 +516,8 @@ footer .footer-below {
 }
 
 .user{
-    margin-top: 20px;
+    margin-top: 21px;
+    margin-right: 10px;
 }
 
 .panel-default{
@@ -521,6 +549,24 @@ footer .footer-below {
     margin: 3px;
     width: 300px;
     border-radius: 5px;
+}
+
+.related{
+    margin-top: 30px;
+}
+
+.details{
+    margin-top: 200px;
+    padding: 1000px;
+}
+#box1{
+    margin: 3px 3px 3px 40px;
+    width: 300px;
+    border-radius: 5px;
+}
+
+#search{
+    margin-left: 10px;
 }
 
 .field,
@@ -629,7 +675,7 @@ footer .footer-below {
     text-align: center;
 }
 
-.thesis-entry{
+#entry{
     margin: 30px 0px 0px 0px;
     width: 330px;
     height: 895px;
@@ -640,10 +686,21 @@ footer .footer-below {
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
+#update{
+    margin: 30px 0px 0px 0px;
+    width: 330px;
+    height: 925px;
+    padding: 10px 10px 10px 10px;
+    background-color: #18bc9c;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
 .student-entry{
     margin: 30px 0px 0px 0px;
     width: 400px;
-    height: 600px;
+    height: 605px;
     padding: 10px 10px 10px 10px;
     background-color: #18bc9c;
     -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
@@ -654,7 +711,7 @@ footer .footer-below {
 .faculty-entry{
     margin: 30px 0px 0px 0px;
     width: 400px;
-    height: 535px;
+    height: 540px;
     padding: 10px 10px 10px 10px;
     background-color: #18bc9c;
     -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
@@ -706,10 +763,22 @@ footer .footer-below {
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
-.thesis-filter{
-    margin: 30px 0px 0px 0px;
+.thesis-filter,
+.thesis-search{
+    margin: 20px 0px 0px 350px;
     width: 320px;
-    height: 70px;
+    height: 65px;
+    padding: 10px 10px 10px 10px;
+    background-color: #18bc9c;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.department-update{
+    margin: 30px 0px 0px 0px;
+    width: 400px;
+    height: 320px;
     padding: 10px 10px 10px 10px;
     background-color: #18bc9c;
     -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);

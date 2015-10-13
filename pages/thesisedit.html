@@ -1,122 +1,274 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
-    <script type="text/javascript" src='/static/jquery-1.11.3.min.js'></script>
     <link rel="stylesheet" type="text/css" href="/static/chosen.min.css" />
-    <script type="text/javascript" src='/static/chosen.jquery.min.js'></script>
     <script type="text/javascript" src='/static/chosen.proto.min.js'></script>
+    <script type="text/javascript" src='/static/chosen.jquery.min.js'></script>
+    <script type="text/javascript" src='/static/jquery-1.11.3.min.js'></script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Thesis Management System</title>
+
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/css/freelancer.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
-<body>
-<div class='main'>
-    <h3>Welcome to THESIS ARCHIVE, {{user}}</h3>
-    <a href="{{logout_url}}" style="float: right;">Logout</a>
-    <br>
-    <br>
-    <div class='form-section'>
-        <form class='thesis-update'>
-          <select data-placeholder='Select Year' class='chose-select thesis_year' name="thesis_year">
-            <option selected value='{{thesis.thesis_year}}'>{{thesis.thesis_year}}</option>
-            <option value="2015">2015</option>
-            <option value="2014">2014</option>
-            <option value="2013">2013</option>
-            <option value="2012">2012</option>
-            <option value="2011">2011</option>
-          </select>
-          <input class="field" type="text" name="thesis_title" placeholder="TITLE" value='{{thesis.thesis_title}}'/>
-          <textarea class="field" name="thesis_abstract" placeholder="ABSTRACT" >{{thesis.thesis_abstract}}</textarea>
-          <select class="chosen-select thesis_adviser" name="thesis_adviser" data-placeholder="Select Thesis Adviser">
-            <option selected value='{{adviser}}'>{{adviser}}</option>
-            <option><button href='/faculty/create'>Add Faculty</button></option>
-          </select>
-          <h3>SECTION</h3>
-          <select data-placeholder="Select Section" class='chose-select thesis_section' name="thesis_section">
-            <option selected value='{{thesis.thesis_section}}'>{{thesis.thesis_section}}</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-          <br>
-          <select data-placeholder='Select Proponents' multiple="" class='chosen-select thesis_proponents' name='thesis_proponents'>
-            {% for p in proponents: %}
-            <option selected value='{{p}}'>{{p}}</option>
-            {%endfor%}
-            <option>Add thesis</option>
-          </select>
-          <select data-placeholder='Select Department' class='chose-select thesis_department' name='thesis_department'>
-            <option selected value='{{department}}'>{{department}}</option>
-            <option>Add Department</option>
-          </select>
 
-          <input type="submit" value="SUBMIT" />
-        </form>
-        <form class='thesis-delete'>
-          <input type='submit' value='DELETE' />
-        </form>
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Thesis Management System</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <div class="user">
+                            <font color="#fff">Welcome, {{user}}</font>
+                        </div>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="{{search_url}}">Search</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="{{logout_url}}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <section id="portfolio">
+        <div class="container">
+            <div class="row">
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    {%for key, value in links.items(): %}
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{key}}</h3>
+                        </div>
+                        <div class="panel-body">
+                            {%for k, v in value.items(): %}
+                            <a href="{{v}}">{{k}}</a><br>
+                            {%endfor%}
+                        </div>
+                    {%endfor%}
+                    </div>
+                </div>
+            <div class="col-lg-8 text-center">
+              <div class='form-section'>
+              <div class='form-group' id="update">
+                  <form class='thesis-update'>
+                  <h4 class="text-center register-title"><font color="#fff">Update Thesis Entry</font></h4>
+                  <div class="year">
+                  <h6>YEAR</h6>
+                    <select data-placeholder='Select Year' class='chosen-select thesis_year' name="thesis_year">
+                      <option selected value='{{thesis.thesis_year}}'>{{thesis.thesis_year}}</option>
+                      <option value="2015">2015</option>
+                      <option value="2014">2014</option>
+                      <option value="2013">2013</option>
+                      <option value="2012">2012</option>
+                      <option value="2011">2011</option>
+                    </select>
+                  </div>
+                  <div class="title">
+                  <h6>TITLE</h6>
+                    <textarea class="field" type="text" name="thesis_title" rows="1" cols="45" placeholder="TITLE">{{thesis.thesis_title}}</textarea>
+                  </div>
+                  <div class="abstract">
+                  <h6>ABSTRACT</h6>
+                    <textarea class="field" name="thesis_abstract" rows="8" cols="45" placeholder="ABSTRACT">{{thesis.thesis_abstract}}</textarea>
+                  </div>
+                  <div class="adviser">
+                  <h6>ADVISER</h6>
+                    <select class="chosen-select thesis_adviser" name="thesis_adviser" data-placeholder="Select Thesis Adviser">
+                      <option selected value='{{adviser}}'>{{adviser}}</option>
+                      <option><button href='/faculty/create'>Add Faculty</button></option>
+                    </select>
+                  </div>
+                  <div class="section">
+                    <h6>SECTION</h6>
+                    <select data-placeholder="Select Section" class='chosen-select thesis_section' name="thesis_section">
+                      <option selected value='{{thesis.thesis_section}}'>{{thesis.thesis_section}}</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                  <div class="proponents">
+                  <h6>PROPONENTS</h6>
+                    <select data-placeholder='Select Proponents' multiple="" class='chosen-select thesis_proponents' name='thesis_proponents'>
+                      {% for p in proponents: %}
+                      <option selected value='{{p}}'>{{p}}</option>
+                      {%endfor%}
+                      <option>Add thesis</option>
+                    </select>
+                  </div>
+                  <div class="dept">
+                  <h6>DEPARTMENT</h6>
+                    <select data-placeholder='Select Department' class='chose-select thesis_department' name='thesis_department'>
+                      <option selected value='{{department}}'>{{department}}</option>
+                      <option>Add Department</option>
+                    </select>
+                  </div>
+                    <button class="btn btn-lg bttn-outline" type="submit">Submit</button>
+                  </form>
+                  <form class='thesis-delete'>
+                    <button class="btn btn-lg bttn-outline" id="delete" type="submit" value='DELETE'>Delete</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; Thesis Management System 2015
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll visible-xs visible-sm">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
     </div>
-</div>
-<script type="text/javascript" src='/static/assets-thesis.js'></script>
-<script type="text/javascript">
-  $('.thesis_section').chosen();
-  $('.thesis_year').chosen();
 
-  function onPost(event){
-    var d = $('.thesis_proponents').val();
-    var data = $(event.target).serializeArray();
 
-    var thesis = {};
-    var j = 0;
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].name == 'thesis_proponents') {
-        thesis['thesis_proponent_' + j] = d[j];
-        j++;
-      } else {thesis[data[i].name] = data[i].value;}
-    }
+    <!-- jQuery -->
+    <script src="/js/jquery.js"></script>
 
-    var thesis_api = '/thesis/{{thesis.key.id()}}/edit';
-    $.post(thesis_api, thesis, function(response) {
-      console.log('data', response)
-      if (response.status = 'OK') {
-         alert('Registration success');
-         window.location.replace("/");
-       } else {
-         alert('Something went wrong');
-       }
-    });
-    return false;
-  }
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
 
-  function thesisDelete(event)
-  {
-    var data = $(event.target).serializeArray();
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="/js/classie.js"></script>
+    <script src="/js/cbpAnimatedHeader.js"></script>
 
-    var thesis = {};
-    var j = 0;
-    for (var i = 0; i < data.length; i++) {
-      thesis[data[i].name] = data[i].value;
-    }
+    <!-- Contact Form JavaScript -->
+    <script src="/js/jqBootstrapValidation.js"></script>
+    <script src="/js/contact_me.js"></script>
 
-    var r = confirm("Are you sure you want to delete this entry?");
+    <!-- Custom Theme JavaScript -->
+    <script src="/js/freelancer.js"></script>
+    <script type="text/javascript" src='/static/script.js'></script>
+    <script type="text/javascript" src='/static/assets-thesis.js'></script>
+    <script type="text/javascript">
+      $('.thesis_section').chosen();
+      $('.thesis_year').chosen();
+    </script>
+    <script type="text/javascript" src='/static/assets-thesis.js'></script>
+    <script type="text/javascript">
+      $('.thesis_section').chosen();
+      $('.thesis_year').chosen();
 
-    if (r == true) {
-      var thesis_api = '/thesis/{{thesis.key.id()}}/delete';
-      $.post(thesis_api, thesis, function(response) {
-      console.log(response)
-      if (response.status = 'OK') {
-         alert('Delete success');
-         window.location.replace("/");
-       } else {
-         alert('Something went wrong');
-       }
-    });
-    }
-    return false;
-  }
-  $('.thesis-update').submit(onPost);
-  $('.thesis-delete').submit(thesisDelete);
-</script>
+      function onPost(event){
+        var d = $('.thesis_proponents').val();
+        var data = $(event.target).serializeArray();
+
+        var thesis = {};
+        var j = 0;
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].name == 'thesis_proponents') {
+            thesis['thesis_proponent_' + j] = d[j];
+            j++;
+          } else {thesis[data[i].name] = data[i].value;}
+        }
+
+        var thesis_api = '/thesis/{{thesis.key.id()}}/edit';
+        $.post(thesis_api, thesis, function(response) {
+          console.log('data', response)
+          if (response.status = 'OK') {
+             alert('Registration success');
+             window.location.replace("/");
+           } else {
+             alert('Something went wrong');
+           }
+        });
+        return false;
+      }
+
+      function thesisDelete(event)
+      {
+        var data = $(event.target).serializeArray();
+
+        var thesis = {};
+        var j = 0;
+        for (var i = 0; i < data.length; i++) {
+          thesis[data[i].name] = data[i].value;
+        }
+
+        var r = confirm("Are you sure you want to delete this entry?");
+
+        if (r == true) {
+          var thesis_api = '/thesis/{{thesis.key.id()}}/delete';
+          $.post(thesis_api, thesis, function(response) {
+          console.log(response)
+          if (response.status = 'OK') {
+             alert('Delete success');
+             window.location.replace("/");
+           } else {
+             alert('Something went wrong');
+           }
+        });
+        }
+        return false;
+      }
+      $('.thesis-update').submit(onPost);
+      $('.thesis-delete').submit(thesisDelete);
+    </script>
+
 </body>
+
 </html>
+
+

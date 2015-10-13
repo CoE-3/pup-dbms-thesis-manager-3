@@ -772,9 +772,17 @@ class SetupHandler(webapp2.RequestHandler):
 		sname = 'Tenerife, Jr.'
 		title = 'Engr. '
 		fullname = (fname + sname).strip().replace(' ','').replace('.','').replace(',','').lower()
-		chairperson = Faculty(key=ndb.Key(Faculty, fullname), faculty_fname=fname, faculty_sname=sname, faculty_title=title, faculty_full=title + fname + sname, faculty_email='pmtenerife@pup.edu.ph')
+		chairperson = Faculty(key=ndb.Key(Faculty, fullname), faculty_fname=fname, faculty_sname=sname, faculty_title=title, faculty_full=title + fname + sname, faculty_email='jp.resuello07@gmail.com')
 		chairperson.put()
 		logging.info(chairperson.key.id())
+
+		fname1='Roman Angelo '
+		sname1='Tria'
+		title1 ='Engr. '
+		fullname1 = (fname1 + sname1).strip().replace(' ','').replace('.','').replace(',','').lower()
+		dbmsprof = Faculty(key=ndb.Key(Faculty, fullname1), faculty_fname=fname1, faculty_sname=sname1, faculty_title=title1, faculty_full=title1 + fname1 + sname1, faculty_email='gino.tr14@gmail.com')
+		dbmsprof.put()
+		logging.info(dbmsprof.key.id())
 
 		university = University(key=ndb.Key(University, 'pup'), university_name='Polytechnic University of the Philippines',university_address='Sta. Mesa, Manila',university_initial='PUP')
 		university.put()
@@ -791,7 +799,9 @@ class SetupHandler(webapp2.RequestHandler):
 		college.put()
 
 		chairperson.faculty_department = department.key
+		dbmsprof.faculty_department = department.key
 		chairperson.put()
+		dbmsprof.put()
 		self.redirect('/')
 
 class FacultyListHandler(webapp2.RequestHandler):
@@ -1300,6 +1310,13 @@ class FacultyEditHandler(webapp2.RequestHandler):
 				if user.is_admin:
 					logout_url = users.create_logout_url('/')
 					link_text = 'Logout'
+					links = {}
+					links['Faculty'] = {'List':'/faculty/list','Create Entry':'/faculty/create'}
+					links['Students'] = {'List':'/student/list','Create Entry':'/student/create'}
+					links['Department'] = {'List':'/department/list','Create Entry':'/department/create'}
+					links['Universities'] = {'List':'/university/list','Create Entry':'/university/create'}
+					links['Colleges'] = {'List':'/college/list','Create Entry':'/college/create'}
+					links['Theses'] = {'List':'/thesis/list/all','Create Entry':'/thesis/create'}
 					faculty = Faculty.get_by_id(id)
 					department = None
 					if faculty.faculty_department is not None:
@@ -1307,6 +1324,7 @@ class FacultyEditHandler(webapp2.RequestHandler):
 						department = department.get()
 						department = department.department_name
 					data = {
+						'links':links,
 						'item' : faculty,
 						'dept' : department,
 						'logout_url':logout_url,
@@ -1382,6 +1400,13 @@ class StudentEdithandler(webapp2.RequestHandler):
 				if user.is_admin:
 					logout_url = users.create_logout_url('/')
 					link_text = 'Logout'
+					links = {}
+					links['Faculty'] = {'List':'/faculty/list','Create Entry':'/faculty/create'}
+					links['Students'] = {'List':'/student/list','Create Entry':'/student/create'}
+					links['Department'] = {'List':'/department/list','Create Entry':'/department/create'}
+					links['Universities'] = {'List':'/university/list','Create Entry':'/university/create'}
+					links['Colleges'] = {'List':'/college/list','Create Entry':'/college/create'}
+					links['Theses'] = {'List':'/thesis/list/all','Create Entry':'/thesis/create'}
 					student = Student.get_by_id(id)
 					department = None
 
@@ -1390,6 +1415,7 @@ class StudentEdithandler(webapp2.RequestHandler):
 						department = department.get()
 						department = department.department_name
 					data = {
+						'links' : links,
 						'item' : student,
 						'id':id,
 						'dept' : department,
@@ -1466,9 +1492,17 @@ class UniversityEditHandler(webapp2.RequestHandler):
 				if user.is_admin:
 					logout_url = users.create_logout_url('/')
 					link_text = 'Logout'
+					links = {}
+					links['Faculty'] = {'List':'/faculty/list','Create Entry':'/faculty/create'}
+					links['Students'] = {'List':'/student/list','Create Entry':'/student/create'}
+					links['Department'] = {'List':'/department/list','Create Entry':'/department/create'}
+					links['Universities'] = {'List':'/university/list','Create Entry':'/university/create'}
+					links['Colleges'] = {'List':'/college/list','Create Entry':'/college/create'}
+					links['Theses'] = {'List':'/thesis/list/all','Create Entry':'/thesis/create'}
 					university = University.get_by_id(id)
 
 					data = {
+						'links' : links,
 						'item' : university,
 						'logout_url':logout_url,
 						'user':user
@@ -1761,6 +1795,13 @@ class ThesisEditHandler(webapp2.RequestHandler):
 				if user.is_admin:
 					logout_url = users.create_logout_url('/')
 					link_text = 'Logout'
+					links = {}
+					links['Faculty'] = {'List':'/faculty/list','Create Entry':'/faculty/create'}
+					links['Students'] = {'List':'/student/list','Create Entry':'/student/create'}
+					links['Department'] = {'List':'/department/list','Create Entry':'/department/create'}
+					links['Universities'] = {'List':'/university/list','Create Entry':'/university/create'}
+					links['Colleges'] = {'List':'/college/list','Create Entry':'/college/create'}
+					links['Theses'] = {'List':'/thesis/list/all','Create Entry':'/thesis/create'}
 
 					thesis = thesisentry.get_by_id(int(id))
 					adviser = Faculty.get_by_id(thesis.thesis_adviser.id())
@@ -1775,6 +1816,7 @@ class ThesisEditHandler(webapp2.RequestHandler):
 					department = department.department_name
 
 					template_values = {
+						'links' : links,
 						'id': id,
 						'proponents':proponents,
 						'adviser':adviser,
@@ -1978,6 +2020,13 @@ class ThesisDetailsHandler(webapp2.RequestHandler):
 				if user.is_admin:
 					logout_url = users.create_logout_url('/')
 					link_text = 'Logout'
+					links = {}
+					links['Faculty'] = {'List':'/faculty/list','Create Entry':'/faculty/create'}
+					links['Students'] = {'List':'/student/list','Create Entry':'/student/create'}
+					links['Department'] = {'List':'/department/list','Create Entry':'/department/create'}
+					links['Universities'] = {'List':'/university/list','Create Entry':'/university/create'}
+					links['Colleges'] = {'List':'/college/list','Create Entry':'/college/create'}
+					links['Theses'] = {'List':'/thesis/list/all','Create Entry':'/thesis/create'}
 
 					thesis = thesisentry.get_by_id(int(id))
 					adviser = Faculty.get_by_id(thesis.thesis_adviser.id())
@@ -1993,6 +2042,7 @@ class ThesisDetailsHandler(webapp2.RequestHandler):
 					edit_link = {}
 					edit_link['Edit Thesis Entry'] = '/thesis/' + id + '/edit'
 					template_values = {
+						'links': links,
 						'edit_link':edit_link,
 						'related':t,
 						'proponents':proponents,
@@ -2050,15 +2100,40 @@ class SearchHandler(webapp2.RequestHandler):
 			user_key = ndb.Key('User', loggedin_user.user_id())
 			user = user_key.get()
 			if user:
-				logout_url = users.create_logout_url('/')
-				link_text = 'Logout'
-				template_values = {
-					'logout_url':logout_url,
-					'user':user.first_name
-				}
-				template = JINJA_ENVIRONMENT.get_template('/pages/search.html')
-				self.response.write(template.render(template_values))
-
+				if user.is_admin:
+					link_text = 'Logout'
+					links = {}
+					links['Faculty'] = {'List':'/faculty/list','Create Entry':'/faculty/create'}
+					links['Students'] = {'List':'/student/list','Create Entry':'/student/create'}
+					links['Department'] = {'List':'/department/list','Create Entry':'/department/create'}
+					links['Universities'] = {'List':'/university/list','Create Entry':'/university/create'}
+					links['Colleges'] = {'List':'/college/list','Create Entry':'/college/create'}
+					links['Theses'] = {'List':'/thesis/list/all','Create Entry':'/thesis/create'}
+					template_values = {
+						'links':links,
+						'search_url':'/search',
+						'logout_url': users.create_logout_url('/'),
+						'user': user.first_name
+					}
+					template = JINJA_ENVIRONMENT.get_template('/pages/search.html')
+					self.response.write(template.render(template_values))
+				else:
+					link_text = 'Logout'
+					links = {}
+					links['Faculty'] = {'List':'/faculty/list'}
+					links['Students'] = {'List':'/student/list'}
+					links['Department'] = {'List':'/department/list'}
+					links['Universities'] = {'List':'/university/list'}
+					links['Colleges'] = {'List':'/college/list'}
+					links['Theses'] = {'List':'/thesis/list/all'}
+					template_values = {
+						'links':links,
+						'search_url':'/search',
+						'logout_url': users.create_logout_url('/'),
+						'user': user.first_name
+					}
+					template = JINJA_ENVIRONMENT.get_template('/pages/search.html')
+					self.response.write(template.render(template_values))
 			else:
 				self.redirect('/register')
 		else:

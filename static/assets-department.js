@@ -5,7 +5,7 @@ function loaddepartment () {
 	$.get(department_list_api, {}, function(response) {
     response.data.forEach(function(department) {
       var department_item = department.department_name;
-      $('.department').prepend('<li>' + department_item + '</li>');
+      $('.department').prepend('<li><i class="fui-arrow-right"></i><a href="' + department.id + '">' + department_item + '</a> -- ' + department.department_college + '</li>');
       $('.department-list').prepend('<option value="' + department_item + '">' + department_item + '</option>');
       });
     $('.department-list').chosen();
